@@ -56,25 +56,25 @@ class _FFNavigationBarState extends State<FFNavigationBar> {
           ],
         ),
         child: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: theme.barHeight,
-            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: widget.items.map((item) {
-                var index = widget.items.indexOf(item);
-                item.setIndex(index);
+          child: LayoutBuilder(
+            builder: (context, constraints) => Container(
+              width: constraints.biggest.width,
+              height: theme.barHeight,
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: widget.items.map((item) {
+                  var index = widget.items.indexOf(item);
+                  item.setIndex(index);
 
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      widget.onSelectTab(index);
-                      selectedIndex = index;
-                    });
-                  },
-                  child: LayoutBuilder(
-                    builder: (context, constraints) => Container(
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        widget.onSelectTab(index);
+                        selectedIndex = index;
+                      });
+                    },
+                    child: Container(
                       color: Colors.transparent,
                       child: SizedBox(
                         width: constraints.biggest.width / widget.items.length,
@@ -82,9 +82,9 @@ class _FFNavigationBarState extends State<FFNavigationBar> {
                         child: item,
                       ),
                     ),
-                  ),
-                );
-              }).toList(),
+                  );
+                }).toList(),
+              ),
             ),
           ),
         ),
