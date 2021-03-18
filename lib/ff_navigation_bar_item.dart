@@ -13,17 +13,17 @@ import 'ff_navigation_bar_theme.dart';
 
 // ignore: must_be_immutable
 class FFNavigationBarItem extends StatelessWidget {
-  final String label;
-  final IconData iconData;
+  final String? label;
+  final IconData? iconData;
   final Duration animationDuration;
-  Color selectedBackgroundColor;
-  Color selectedForegroundColor;
-  Color selectedLabelColor;
+  Color? selectedBackgroundColor;
+  Color? selectedForegroundColor;
+  Color? selectedLabelColor;
 
-  int index;
-  int selectedIndex;
-  FFNavigationBarTheme theme;
-  bool showSelectedItemShadow;
+  int? index;
+  int? selectedIndex;
+  late FFNavigationBarTheme theme;
+  late bool showSelectedItemShadow;
   double itemWidth;
 
   void setIndex(int index) {
@@ -31,7 +31,7 @@ class FFNavigationBarItem extends StatelessWidget {
   }
 
   Color _getDerivedBorderColor() {
-    return theme.selectedItemBorderColor ?? theme.barBackgroundColor;
+    return theme.selectedItemBorderColor;
   }
 
   Color _getBorderColor(bool isOn) {
@@ -45,7 +45,7 @@ class FFNavigationBarItem extends StatelessWidget {
   static const kDefaultAnimationDuration = Duration(milliseconds: 1500);
 
   FFNavigationBarItem({
-    Key key,
+    Key? key,
     this.label,
     this.itemWidth = 60,
     this.selectedBackgroundColor,
@@ -77,7 +77,7 @@ class FFNavigationBarItem extends StatelessWidget {
     );
   }
 
-  Widget _makeIconArea(double itemWidth, IconData iconData) {
+  Widget _makeIconArea(double itemWidth, IconData? iconData) {
     bool isSelected = _isItemSelected();
     double radius = itemWidth / 2;
     double innerBoxSize = itemWidth - 8;
@@ -101,7 +101,7 @@ class FFNavigationBarItem extends StatelessWidget {
   }
 
   Widget _makeIcon(
-    IconData iconData,
+    IconData? iconData,
   ) {
     bool isSelected = _isItemSelected();
     return Icon(
@@ -152,7 +152,7 @@ class FFNavigationBarItem extends StatelessWidget {
     double iconTopSpacer = isSelected ? 0 : 2;
     double shadowTopSpacer = 4;
 
-    Widget labelWidget = _makeLabel(label);
+    Widget labelWidget = _makeLabel(label!);
     Widget iconAreaWidget = _makeIconArea(itemWidth, iconData);
     Widget shadowWidget = showSelectedItemShadow ? _makeShadow() : Container();
 
@@ -164,7 +164,7 @@ class FFNavigationBarItem extends StatelessWidget {
         width: itemWidth,
         height: itemHeight,
         child: Stack(
-          overflow: Overflow.visible,
+          clipBehavior: Clip.none,
           children: <Widget>[
             Positioned(
               top: topOffset,
